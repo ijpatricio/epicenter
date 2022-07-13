@@ -1,8 +1,12 @@
 import colors from 'vuetify/es5/util/colors'
+import configs from './src/configs'
+const { locale, availableLocales, fallbackLocale } = configs.locales
 
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
+
+  srcDir: 'src/',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -18,7 +22,12 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap'
+      },
+      ...configs.icons.map((href) => ({ rel: 'stylesheet', href }))
     ]
   },
 
@@ -32,12 +41,32 @@ export default {
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  // components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify',
+    ['@nuxtjs/vuetify', {
+      customVariables: ['~/assets/scss/vuetify/variables/_index.scss'],
+      optionsPath: '~/configs/vuetify.js',
+      treeShake: true,
+      defaultAssets: {
+        font: false
+      }
+    }],
+    ['nuxt-i18n', {
+      detectBrowserLanguage: {
+        useCookie: true,
+        cookieKey: 'i18n_redirected'
+      },
+      locales: availableLocales,
+      lazy: true,
+      langDir: 'translations/',
+      defaultLocale: locale,
+      vueI18n: {
+        fallbackLocale
+      }
+    }]
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -67,23 +96,8 @@ export default {
     credentials: true,
   },
 
-  // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
-  vuetify: {
-    customVariables: ['~/assets/variables.scss'],
-    theme: {
-      dark: true,
-      themes: {
-        dark: {
-          primary: colors.blue.darken2,
-          accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3
-        }
-      }
-    }
+  router: {
+    middleware: ['auth']
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

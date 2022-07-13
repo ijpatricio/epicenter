@@ -15,23 +15,6 @@
         </v-card-text>
       </v-card>
 
-
-      <v-card
-        class="mx-auto mt-4"
-        max-width="344"
-      >
-        <div class="ma-4">
-          <v-btn @click="login"> Login </v-btn>
-          <v-btn @click="logout"> Logout </v-btn>
-        </div>
-        <v-card-text>
-          User:
-
-          {{ $auth.user?.name }}
-        </v-card-text>
-      </v-card>
-
-
       <v-card
         class="mx-auto mt-4"
         max-width="344"
@@ -58,12 +41,6 @@ export default {
     news: [],
   }),
 
-  computed: {
-    authData() {
-      return this.$auth.user
-    }
-  },
-
   created() {
     this.getNews()
   },
@@ -72,17 +49,7 @@ export default {
     getNews() {
       this.$api.get('/news')
         .then(data => this.$set(this, 'news', data))
-    },
-    login() {
-      this.$auth.loginWith('laravelSanctum', {
-        data: {
-          email: 'admin@admin.com',
-          password: 'password',
-        }
-      })
-    },
-    logout() {
-      this.$auth.logout()
+        .catch(e => console.log(e))
     },
   },
 }

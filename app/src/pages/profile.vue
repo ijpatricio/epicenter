@@ -2,9 +2,9 @@
   <v-row>
     <v-col class="text-center">
       <img
-        src="/v.png"
+        src="/vuetify-logo.svg"
         alt="Vuetify.js"
-        class="mb-5"
+        class="logo-height mb-2"
       >
       <blockquote class="blockquote">
         &#8220;First, solve the problem. Then, write the code.&#8221;
@@ -20,6 +20,12 @@
 
 <script>
 export default {
-  name: 'InspirePage'
+  name: 'ProfilePage'
 }
 </script>
+
+<style scoped>
+.logo-height {
+  height: 120px;
+}
+</style>
