@@ -34,12 +34,24 @@
 </template>
 
 <script>
+import {useFoldersStore} from '@/store/useFoldersStore'
+
 export default {
-  name: 'NewsPage',
 
   data: () => ({
     news: [],
+    form: {
+      folder: null,
+    }
   }),
+
+  setup() {
+    const folderStore = useFoldersStore()
+
+    return {
+      folderStore
+    }
+  },
 
   created() {
     this.getNews()

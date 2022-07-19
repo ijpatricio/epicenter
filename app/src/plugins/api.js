@@ -1,6 +1,6 @@
-export default function ({ $axios, app }, inject) {
+export default function ({ $axios, app, $config }, inject) {
   const api = $axios.create({
-    baseURL: 'http://localhost',
+    baseURL: $config.apiBaseUrl + '/api',
   })
 
   api.onRequest((config) => {

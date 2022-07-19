@@ -2,6 +2,10 @@ import colors from 'vuetify/es5/util/colors'
 import configs from './src/configs'
 const { locale, availableLocales, fallbackLocale } = configs.locales
 
+const apiBaseUrl = process.env.NODE_ENV === 'production'
+  ? 'https://YOUR_URL_HERE'
+  : 'http://localhost'
+
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -66,6 +70,13 @@ export default {
       vueI18n: {
         fallbackLocale
       }
+    }],
+    // Nuxt 2 only:
+    // https://composition-api.nuxtjs.org/getting-started/setup#quick-start
+    '@nuxtjs/composition-api/module',
+    // Vuex is used by @nuxt/auth, and maybe other modules you might want to use.
+    ['@pinia/nuxt', {
+      disableVuex: false
     }]
   ],
 
@@ -74,6 +85,7 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
+    '@nuxtjs/tailwindcss'
   ],
 
   auth: {
@@ -92,7 +104,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: 'http://localhost',
+    baseURL: apiBaseUrl,
     credentials: true,
   },
 
@@ -102,5 +114,24 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    //
+  },
+
+  // https://tailwindcss.nuxtjs.org/getting-started/options
+  tailwindcss: {
+    configPath: 'tailwind.config.js'
+  },
+
+  // Fix https://github.com/nuxt-community/tailwindcss-module/issues/480#issuecomment-1138276828
+  devServerHandlers: [],
+
+  // Frontend variables (not safe for credentials)
+  publicRuntimeConfig: {
+    apiBaseUrl
+  },
+
+  // SSR variables
+  privateRuntimeConfig: {
+    //
   }
 }
