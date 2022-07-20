@@ -14,11 +14,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        if (app()->environment('production')) {
+            abort(1, 'Never gonna let you down!');
+        }
+
         // \App\Models\User::factory(10)->create();
 
          \App\Models\User::factory()->create([
              'name' => 'Admin User',
              'email' => 'admin@admin.com',
          ]);
+
+         $this->call(CollectionSeeder::class);
     }
 }
