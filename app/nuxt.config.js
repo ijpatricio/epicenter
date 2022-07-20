@@ -3,7 +3,7 @@ import configs from './src/configs'
 const { locale, availableLocales, fallbackLocale } = configs.locales
 
 const apiBaseUrl = process.env.NODE_ENV === 'production'
-  ? 'https://YOUR_URL_HERE'
+  ? 'https://YOUR_URL_HERE' // or get it from process.ENV.YOUR_URL_HERE
   : 'http://localhost'
 
 export default {

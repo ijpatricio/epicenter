@@ -8,6 +8,9 @@ export default {
         {
           icon: 'mdi-view-dashboard-outline', key: 'menu.dashboard', text: 'Dashboard', link: '/dashboard'
         },
+        {
+          icon: 'mdi-format-list-group', key: 'menu.collections', text: 'Collections', link: '/collections'
+        },
       ]
     },
   ],

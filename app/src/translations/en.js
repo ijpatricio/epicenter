@@ -2,6 +2,7 @@ export default {
   menu: {
     profile: 'Profile',
     dashboard: 'Dashboard',
+    collections: 'Collections',
     logout: 'Logout',
   },
   usermenu: {
